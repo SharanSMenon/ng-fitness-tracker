@@ -1,0 +1,52 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [ngClass]="{hidden: !(isHandset$ | async)}"
+               [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <div *ngIf="!isAuth">
+        <a mat-list-item routerLink="/signup">Signup</a>
+        <a mat-list-item routerLink="/login">Login</a>
+      </div>
+      <div *ngIf="isAuth">
+        <a mat-list-item routerLink="/training">
+          <!--        <mat-icon>fitness_center</mat-icon>-->
+          <span class="nav-caption">Training</span>
+        </a>
+        <a mat-list-item (click)="onLogout()">Logout</a>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div>
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <span>NG Fitness Tracker</span>
+      </div>
+      <span class="spacer"></span>
+      <div *ngIf="!(isHandset$ | async)">
+        <div *ngIf="!isAuth">
+          <a mat-button routerLink="/signup">Signup</a>
+          <a mat-button routerLink="/login">Login</a>
+        </div>
+        <div *ngIf="isAuth">
+          <a mat-button routerLink="/training">Training</a>
+          <a mat-button (click)="onLogout()">Logout</a>
+        </div>
+      </div>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <br>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

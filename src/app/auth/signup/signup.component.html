@@ -1,0 +1,63 @@
+<section class="signup-form">
+  <form fxLayout="column" fxLayoutAlign="center center"
+        #f="ngForm"
+        (ngSubmit)="onSubmit(f)"
+        fxLayoutGap="10px"
+        autocomplete="off"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Your email</mat-label>
+      <input ngModel
+             name="email"
+             matInput
+             autocomplete="off"
+             type="email"
+             placeholder="johndoe@example.com"
+             email
+             required
+             #emInput="ngModel"
+      >
+      <mat-error *ngIf="!emInput.hasError('required')">Not a valid email</mat-error>
+      <mat-error *ngIf="emInput.hasError('required')">Field must not be empty</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline" hintLabel="Should be 6 characters long">
+      <mat-label>Password</mat-label>
+      <input matInput
+             ngModel
+             name="password"
+             autocomplete="off"
+             type="password"
+             required
+             minlength="6"
+             #pwInput="ngModel"
+      >
+      <mat-hint align="end">{{pwInput.value?.length}} / 6</mat-hint>
+      <mat-error>Has to be at least 6 characters long</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Birthdate</mat-label>
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date" ngModel name="birthdate" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-checkbox ngModel name="agree" #checkbox matTooltipPosition="left" color="primary" matTooltip="Just check the box" required>Agree to Terms and Conditions.</mat-checkbox>
+    <button
+      type="button"
+      mat-raised-button
+      [disabled]="!checkbox.checked"
+      matTooltip="Google"
+      (click)="loginGoogle()"
+      color="accent">
+      Signup With Google
+    </button>
+    <button
+      type="submit"
+      mat-raised-button
+      [disabled]="f.invalid"
+      matTooltip="You can now sign up. Yay!"
+      color="primary">
+      <span *ngIf="!isLoading">Submit</span>
+      <mat-spinner *ngIf="isLoading" color="accent" diameter="25"></mat-spinner>
+    </button>
+  </form>
+</section>

@@ -1,0 +1,53 @@
+<section class="signup-form">
+  <form fxLayout="column" fxLayoutAlign="center center"
+        #f="ngForm"
+        (ngSubmit)="onSubmit(f)"
+        fxLayoutGap="10px"
+        autocomplete="off"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Your email</mat-label>
+      <input ngModel
+             name="email"
+             matInput
+             autocomplete="off"
+             type="email"
+             placeholder="johndoe@example.com"
+             email
+             required
+             #emInput="ngModel"
+      >
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput
+             ngModel
+             name="password"
+             autocomplete="off"
+             type="password"
+             required
+             minlength="6"
+             #pwInput="ngModel"
+      >
+      <mat-hint align="end">Please enter your password</mat-hint>
+      <mat-error>Has to be at least 6 characters long</mat-error>
+    </mat-form-field>
+    <button
+      type="button"
+      mat-raised-button
+      matTooltip="For google users"
+      (click)="loginWithGoogle()"
+      color="accent">
+      Login with Google
+    </button>
+    <button
+      type="submit"
+      mat-raised-button
+      [disabled]="f.invalid"
+      matTooltip="Time to login!"
+      color="primary">
+      <span *ngIf="!isLoading">Login</span>
+      <mat-spinner *ngIf="isLoading" color="accent" diameter="25"></mat-spinner>
+    </button>
+  </form>
+</section>
